@@ -1,20 +1,19 @@
 <script>
-function Gadget(){
-	var name = "iPod";
-	this.getName = function(){
-		return name;
-	}
-	this.setName = function(val){
-		name = val;
-	}
-}
-var gadget =  new Gadget();
-console.log( gadget.name);   //undefined
-console.log( gadget.getName());//iPod
-gadget.name = "Gallexy";
-console.log( gadget.getName());//iPod
-gadget.setName( "Gallexy" );
-console.log( gadget.getName());//Gallexy
+var myobj;
+(function(){
+	var privateMember = "private";
+	myobj = {
+			getPrivateName: function(){
+				return privateMember;
+			}
+	};
+	
+} () );
+myobj.publicMember = "public";
+
+console.log( myobj.publicMember);//undefined
+console.log( myobj.privateMember);//undefined
+console.log( myobj.getPrivateName());//my, oh my
 
 </script>
 
