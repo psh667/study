@@ -1,0 +1,20 @@
+<script>
+function Gadget(){
+	var name = "iPod";
+	this.getName = function(){
+		return name;
+	}
+	this.setName = function(val){
+		name = val;
+	}
+}
+var gadget =  new Gadget();
+console.log( gadget.name);   //undefined
+console.log( gadget.getName());//iPod
+gadget.name = "Gallexy";
+console.log( gadget.getName());//iPod
+gadget.setName( "Gallexy" );
+console.log( gadget.getName());//Gallexy
+
+</script>
+
