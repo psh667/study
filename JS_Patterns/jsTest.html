@@ -1,19 +1,36 @@
 <script>
-var myobj;
-(function(){
-	var privateMember = "private";
-	myobj = {
-			getPrivateName: function(){
-				return privateMember;
+
+function Gadget ()
+{
+	var name = 'iPod';
+	this.getName = function(){
+		return name;
+	};
+	this.setName = function(val){
+		name = val;
+	};
+}
+
+Gadget.prototype = (   function(){
+	var browser = "Mobile Webkit";
+	return {
+			getBrowser : function(){
+			return browser;
+			},
+			setBrowser: function(val){
+				browser = val;
 			}
 	};
-	
-} () );
-myobj.publicMember = "public";
+}() );
 
-console.log( myobj.publicMember);//undefined
-console.log( myobj.privateMember);//undefined
-console.log( myobj.getPrivateName());//my, oh my
+var toy = new Gadget();
+var toy2 = new Gadget();
+toy2.setBrowser("Chrome Browser");
+toy2.setName("Gallexy");
+console.log(toy.getName());
+console.log(toy2.getName());
+console.log(toy.getBrowser());
+console.log(toy2.getBrowser());
 
 </script>
 
