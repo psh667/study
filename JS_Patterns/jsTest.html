@@ -1,36 +1,22 @@
 <script>
+var obj;
 
-function Gadget ()
-{
-	var name = 'iPod';
-	this.getName = function(){
-		return name;
-	};
-	this.setName = function(val){
-		name = val;
-	};
-}
+( function(){ 
+	function func1(){//private
+		console.log("Call  fun1");
+	}
 
-Gadget.prototype = (   function(){
-	var browser = "Mobile Webkit";
-	return {
-			getBrowser : function(){
-			return browser;
-			},
-			setBrowser: function(val){
-				browser = val;
-			}
+	function func2(){//public
+		func1();
+		console.log("Call fun2");
+	}
+	
+	obj ={
+		func2: func2
 	};
 }() );
 
-var toy = new Gadget();
-var toy2 = new Gadget();
-toy2.setBrowser("Chrome Browser");
-toy2.setName("Gallexy");
-console.log(toy.getName());
-console.log(toy2.getName());
-console.log(toy.getBrowser());
-console.log(toy2.getBrowser());
-
+obj.func2();
+obj.func1();//error
 </script>
 
