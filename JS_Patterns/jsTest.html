@@ -1,22 +1,28 @@
 <script>
-var obj;
+var MYAPP = MYAPP || {};
 
-( function(){ 
-	function func1(){//private
-		console.log("Call  fun1");
+MYAPP.namespace = function(ns_string){
+	var parts = ns_string.split('.'),
+	      parent = MYAPP,
+              i;
+
+	if( parts[0] === 'MYAPP'){
+		parts = parts.slice(1);
 	}
 
-	function func2(){//public
-		func1();
-		console.log("Call fun2");
+	for( i = 0 ; i < parts.length ; i+= 1 ){
+		if( typeof parent[parts[i]] === 'undefined' ){
+			parent[parts[i]] = {};
+		}
+		parent = parent[parts[i]];
 	}
-	
-	obj ={
-		func2: func2
-	};
-}() );
+	return parent;
+};
 
-obj.func2();
-obj.func1();//error
+MYAPP.namespace( 'MYAPP.my');//Create namespace
+
+MYAPP.my.id = "MYAPP.my.id";
+console.log(MYAPP.my.id);
+
 </script>
 
