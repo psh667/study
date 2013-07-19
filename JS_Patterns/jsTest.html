@@ -1,37 +1,22 @@
 <script>
-var agg = ( function(){
-	var index = 0,
-		data = [1,2,3,4,5];
-	       length = data.length;
-	
-	return {
-		next : function(){
-			var element;
-			if( !this.hasNext() ){
-				return null;
-			}
-			element = data[index];
-			index = index + 1;
-			return element;
-		},
-		hasNext: function() {
-			return  index < length;
-		},
-		rewind: function(){
-			index = 0;
-		},
-		current: function(){
-			return data[index];
-		}
-	};
-}());
+var Gadget = function(){
+};
+Gadget.str = "hello";
+Gadget.isShiny = function (){
+	console.log("isShiny1");
+	console.log( this instanceof Gadget );
+};
 
-var element;
-while( element = agg.next() ){
-	console.log(element);//1,2,3,4,5
-}
+Gadget.prototype.isShiny = function(){
+	console.log("isShiny2");
+	Gadget.isShiny.call();	
+};
 
-agg.rewind();
-console.log( agg.current());//1
+Gadget.isShiny();//isShiny1, false
 
+var o = new Gadget();
+o.isShiny();//isShiny2,isShiny1, false
+
+console.log(o.str);            //undefined
+console.log(Gadget.str);//hello
 </script>
