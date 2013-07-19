@@ -1,28 +1,19 @@
 <script>
-var MYAPP = MYAPP || {};
-
-MYAPP.namespace = function(ns_string){
-	var parts = ns_string.split('.'),
-	      parent = MYAPP,
-              i;
-
-	if( parts[0] === 'MYAPP'){
-		parts = parts.slice(1);
-	}
-
-	for( i = 0 ; i < parts.length ; i+= 1 ){
-		if( typeof parent[parts[i]] === 'undefined' ){
-			parent[parts[i]] = {};
-		}
-		parent = parent[parts[i]];
-	}
-	return parent;
+var Gadget = function(){
 };
 
-MYAPP.namespace( 'MYAPP.my');//Create namespace
+Gadget.isShiny = function (){
+	console.log("isShiny1");
+	console.log( this instanceof Gadget );
+};
 
-MYAPP.my.id = "MYAPP.my.id";
-console.log(MYAPP.my.id);
+Gadget.prototype.isShiny = function(){
+	console.log("isShiny2");
+	Gadget.isShiny.call();	
+};
 
+Gadget.isShiny();//isShiny1, false
+
+var o = new Gadget();
+o.isShiny();//isShiny2,isShiny1, false
 </script>
-
