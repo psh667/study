@@ -1,19 +1,21 @@
 <script>
-var Gadget = function(){
+var obj ={
+	value: 1,
+	increment: function() {
+		this.value +=1;
+		return this;//chaining pattern
+	},		
+	add : function(v){
+		this.value  += v;
+		return this;
+	},
+	shout: function(){
+		alert( this.value);
+	}
 };
 
-Gadget.isShiny = function (){
-	console.log("isShiny1");
-	console.log( this instanceof Gadget );
-};
-
-Gadget.prototype.isShiny = function(){
-	console.log("isShiny2");
-	Gadget.isShiny.call();	
-};
-
-Gadget.isShiny();//isShiny1, false
-
-var o = new Gadget();
-o.isShiny();//isShiny2,isShiny1, false
+obj.increment().add(3).shout();//5
+//obj.increment();
+//obj.add(3);
+//obj.shout();
 </script>
