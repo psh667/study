@@ -1,21 +1,42 @@
 <script>
-var obj ={
-	value: 1,
-	increment: function() {
-		this.value +=1;
-		return this;//chaining pattern
-	},		
-	add : function(v){
-		this.value  += v;
-		return this;
+var constant = ( function(){
+	var constants = {}
+	ownProp = Object.prototype.hasOwnProperty,
+	allowed = {
+		string: 1,
+		number: 1,
+		boolean: 1
 	},
-	shout: function(){
-		alert( this.value);
-	}
-};
+	prefix = (Math.random() + "_").slice(2);
+	return {
+		set:function (name, value){
+			if( this.isDefined(name) ){
+				return false;
+			}
+			if( !ownProp.call(allowed, typeof value)){
+				return false;
+			}
+			constants[prefix + name] = value;
+			return true;
 
-obj.increment().add(3).shout();//5
-//obj.increment();
-//obj.add(3);
-//obj.shout();
+		},
+		isDefined: function(name){
+			return ownProp.call( constants, prefix +name );
+		},
+		get: function( name){
+			if( this.isDefined(name)) {
+				return constants[prefix+name];
+			}
+			return null;
+		}
+	};
+
+}());
+
+console.log( constant.isDefined("maxWidth") );//false
+constant.set("maxWidth", 480);
+console.log( constant.get("maxWidth") );//480
+console.log( constant.isDefined("maxWidth") );//true;
+constant.set("maxWidth", 0);
+console.log( constant.get("maxWidth") );//480
 </script>
