@@ -1,42 +1,12 @@
 <script>
-var constant = ( function(){
-	var constants = {}
-	ownProp = Object.prototype.hasOwnProperty,
-	allowed = {
-		string: 1,
-		number: 1,
-		boolean: 1
-	},
-	prefix = (Math.random() + "_").slice(2);
-	return {
-		set:function (name, value){
-			if( this.isDefined(name) ){
-				return false;
-			}
-			if( !ownProp.call(allowed, typeof value)){
-				return false;
-			}
-			constants[prefix + name] = value;
-			return true;
+function Universe(){
+	if( typeof Universe.instance === "object" )
+		return Universe.instance;
+	this.name = "name";
+	Universe.instance = this;
+}
 
-		},
-		isDefined: function(name){
-			return ownProp.call( constants, prefix +name );
-		},
-		get: function( name){
-			if( this.isDefined(name)) {
-				return constants[prefix+name];
-			}
-			return null;
-		}
-	};
-
-}());
-
-console.log( constant.isDefined("maxWidth") );//false
-constant.set("maxWidth", 480);
-console.log( constant.get("maxWidth") );//480
-console.log( constant.isDefined("maxWidth") );//true;
-constant.set("maxWidth", 0);
-console.log( constant.get("maxWidth") );//480
+var uni = new Universe();
+var uni2 = new Universe();
+console.log( uni === uni2 );//true
 </script>
