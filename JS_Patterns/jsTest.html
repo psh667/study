@@ -1,44 +1,37 @@
 <script>
-function CarMaker(){}
-CarMaker.prototype.drive = function(){
-	return "I have " + this.doors + "doors";
-};
+var agg = ( function(){
+	var index = 0,
+		data = [1,2,3,4,5];
+	       length = data.length;
+	
+	return {
+		next : function(){
+			var element;
+			if( !this.hasNext() ){
+				return null;
+			}
+			element = data[index];
+			index = index + 1;
+			return element;
+		},
+		hasNext: function() {
+			return  index < length;
+		},
+		rewind: function(){
+			index = 0;
+		},
+		current: function(){
+			return data[index];
+		}
+	};
+}());
 
-CarMaker.factory = function(type){
-	var constr = type,
-	newcar;
+var element;
+while( element = agg.next() ){
+	console.log(element);//1,2,3,4,5
+}
 
-	if( typeof CarMaker[constr] !== "function" ){
-		throw{
-			message: constr + " doesn't exist"
-		};
-	}
-
-	if( typeof CarMaker[constr].prototype.drive !== "function" ){
-		CarMaker[constr].prototype = new CarMaker();
-	}
-	newcar = new CarMaker[constr]();
-	return newcar;
-};
-
-CarMaker.Compact = function(){
-	this.doors = 4;
-};
-CarMaker.Convertible = function(){
-	this.doors = 2;
-};
-CarMaker.SUV = function(){
-	this.doors = 6;
-};
-
-
-var corolla = CarMaker.factory("Compact");
-console.log( corolla.drive() );// I have 4doors
-
-var solstice = CarMaker.factory("Convertible");
-console.log( solstice.drive() );// I have 2doors
-
-var solstice = CarMaker.factory("SUV");
-console.log( solstice.drive() );// I have 6doors
+agg.rewind();
+console.log( agg.current());//1
 
 </script>
