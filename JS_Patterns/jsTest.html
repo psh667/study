@@ -1,13 +1,44 @@
 <script>
-function Universe(){
-	var instance = this;
-	this.name = "name";
-	Universe = function(){
-		return instance;
-	};
-}
+function CarMaker(){}
+CarMaker.prototype.drive = function(){
+	return "I have " + this.doors + "doors";
+};
 
-var uni = new Universe();
-var uni2 = new Universe();
-console.log( uni === uni2 );//true
+CarMaker.factory = function(type){
+	var constr = type,
+	newcar;
+
+	if( typeof CarMaker[constr] !== "function" ){
+		throw{
+			message: constr + " doesn't exist"
+		};
+	}
+
+	if( typeof CarMaker[constr].prototype.drive !== "function" ){
+		CarMaker[constr].prototype = new CarMaker();
+	}
+	newcar = new CarMaker[constr]();
+	return newcar;
+};
+
+CarMaker.Compact = function(){
+	this.doors = 4;
+};
+CarMaker.Convertible = function(){
+	this.doors = 2;
+};
+CarMaker.SUV = function(){
+	this.doors = 6;
+};
+
+
+var corolla = CarMaker.factory("Compact");
+console.log( corolla.drive() );// I have 4doors
+
+var solstice = CarMaker.factory("Convertible");
+console.log( solstice.drive() );// I have 2doors
+
+var solstice = CarMaker.factory("SUV");
+console.log( solstice.drive() );// I have 6doors
+
 </script>
