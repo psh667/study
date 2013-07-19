@@ -1,22 +1,16 @@
 <script>
-var Gadget = function(){
-};
-Gadget.str = "hello";
-Gadget.isShiny = function (){
-	console.log("isShiny1");
-	console.log( this instanceof Gadget );
+var Gadget = function(str ){
+	this.str = str;
+	this.getStr = function(){ return str; }
+	return this;
 };
 
-Gadget.prototype.isShiny = function(){
-	console.log("isShiny2");
-	Gadget.isShiny.call();	
-};
+var obj = new Gadget("a");
+var obj2 = new Gadget("b");
+var obj3 = Gadget("c");
+console.log(obj.getStr());//a
+console.log(obj2.getStr());//b
+console.log(obj3.getStr());//c
 
-Gadget.isShiny();//isShiny1, false
 
-var o = new Gadget();
-o.isShiny();//isShiny2,isShiny1, false
-
-console.log(o.str);            //undefined
-console.log(Gadget.str);//hello
 </script>
