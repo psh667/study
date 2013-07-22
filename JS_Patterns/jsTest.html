@@ -1,16 +1,13 @@
 <script>
-var Gadget = function(str ){
-	this.str = str;
-	this.getStr = function(){ return str; }
-	return this;
+var func = function( str ){
+	console.log(str);
+	for( var i = 0 ; i < arguments.length; i++)  {
+			console.log(arguments[i]);
+	}
 };
+func("hello");//hello,hello                                        -> str = "hello",  arguments[0] = "hello"
+func("hello","world", "!!" );//hello hello world !!  -> str = "hello" ,  arguments[0] = "hello" , arguments[1] = "world", arguments[2] = "!!"
 
-var obj = new Gadget("a");
-var obj2 = new Gadget("b");
-var obj3 = Gadget("c");
-console.log(obj.getStr());//a
-console.log(obj2.getStr());//b
-console.log(obj3.getStr());//c
 
 
 </script>
