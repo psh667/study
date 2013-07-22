@@ -1,13 +1,22 @@
 <script>
-var func = function( str ){
-	console.log(str);
-	for( var i = 0 ; i < arguments.length; i++)  {
-			console.log(arguments[i]);
-	}
+var Gadget = function(str ){
+	this.str = str;
+	return this;
 };
-func("hello");//hello,hello                                        -> str = "hello",  arguments[0] = "hello"
-func("hello","world", "!!" );//hello hello world !!  -> str = "hello" ,  arguments[0] = "hello" , arguments[1] = "world", arguments[2] = "!!"
 
+var obj =   new Gadget("construct a");
+var obj2 = new Gadget("construct b");
+var obj3 = Gadget("functions a");
+var obj4 = Gadget("functions b");
+
+console.log( obj.str );    //construct a
+console.log( obj2.str );  //construct b
+
+console.log( obj3.str );  //functions a ->this는 window 객체를 나타낸다
+console.log( obj4.str );  //functions b
+
+console.log( obj3 == obj4);//true
+console.log( window == window.obj3);//true
 
 
 </script>
