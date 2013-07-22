@@ -14,10 +14,10 @@ console.log( rect.getArea());//50
 
 
 function Square( length ){
-	this.base = Rectangle;
-	this.base(length,length);
+	Rectangle.call(this,length,length);
 }
-Square.prototype = Rectangle.prototype;
+Square.prototype = new Rectangle();
+Square.prototype.constructor = Square;
 
 var sqr = new Square( 10 );
 console.log( sqr.getArea());//100
