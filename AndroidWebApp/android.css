@@ -39,3 +39,18 @@ body {
     padding: 12px 10px;
     text-decoration: none;
 }
+
+#content, #sidebar {
+    padding: 10px;
+}
+
+
+#header ul li:first-child a {
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+}
+#header ul li:last-child a {
+    -webkit-border-bottom-left-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+}
+
