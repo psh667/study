@@ -1,5 +1,5 @@
     $(document).ready(function(){
-        $('#header').append('<div onclick="toggleMenu()">Menu</div>');
+        $('#header').append('<div class="leftButton" onclick="toggleMenu()">Menu</div>');
     }); 
     function toggleMenu() {
 
