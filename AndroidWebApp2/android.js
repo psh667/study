@@ -4,6 +4,8 @@ $(document).ready(function(){
     loadPage(startUrl);
 });
 function loadPage(url) {
+    $('body').append('<div id="progress">Loading...</div>');
+    alert("hold");
     scrollTo(0,0); 
     if (url == startUrl) {
         var element = ' #header ul'; 
@@ -21,6 +23,6 @@ function loadPage(url) {
                 loadPage(url);
             }
         });
-
+    $('#progress').remove();
     });
 }
