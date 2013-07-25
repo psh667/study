@@ -2,8 +2,10 @@ var jQT = $.jQTouch({
     icon: 'kilo.png'
 }); 
 
+var db;
 $(document).ready(function(){
     $('#settings form').submit(saveSettings);
+    $('#createEntry form').submit(createEntry);
     $('#settings').bind('pageAnimationStart', loadSettings);//loadSettings();
 
     $('#dates li a').bind('click touchend', function(){
@@ -13,9 +15,27 @@ $(document).ready(function(){
         sessionStorage.currentDate = date.getMonth() + 1 + '/' + 
                                      date.getDate() + '/' + 
                                      date.getFullYear();
-	alert( sessionStorage.currentDate );
+
 	refreshEntries();
     });
+
+    //Create DataBase
+    var shortName = 'Kilo';
+    var version = '1.0';
+    var displayName = 'Kilo';
+    var maxSize = 65536;
+    db = openDatabase(shortName, version, displayName, maxSize);
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'CREATE TABLE IF NOT EXISTS entries ' +
+                '  (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, ' +
+                '   date DATE NOT NULL, food TEXT NOT NULL, ' +
+                ' calories INTEGER NOT NULL );'
+            );
+        }
+    );
+
 
 });
 function saveSettings() {
@@ -45,5 +65,29 @@ function loadSettings() {
 function refreshEntries() {
     var currentDate = sessionStorage.currentDate;
     $('#date h1').text( currentDate );
+}
+
+function createEntry() {
+    var date = sessionStorage.currentDate;
+    var calories = $('#calories').val();
+    var food = $('#food').val();
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'INSERT INTO entries (date, calories, food) VALUES (?, ?, ?);', 
+                [date, calories, food], 
+                function(){
+                    jQT.goBack();
+                }, 
+                errorHandler
+            );
+        }
+    );
+    return false;
+}
+
+function errorHandler(transaction, error) {
+    alert('Oops. Error was '+error.message+' (Code '+error.code+')');
+    return true; 
 }
 
