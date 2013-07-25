@@ -65,6 +65,31 @@ function loadSettings() {
 function refreshEntries() {
     var currentDate = sessionStorage.currentDate;
     $('#date h1').text( currentDate );
+
+    //database load
+    $('#date ul li:gt(0)').remove();
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM entries WHERE date = ? ORDER BY food;', 
+                [currentDate], 
+                function (transaction, result) {
+                    for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+                        var newEntryRow = $('#entryTemplate').clone();
+                        newEntryRow.removeAttr('id');
+                        newEntryRow.removeAttr('style');
+                        
+                        newEntryRow.appendTo('#date ul');
+                        newEntryRow.find('.label').text(row.food);
+                        newEntryRow.find('.calories').text(row.calories);
+                    }
+                }, 
+                errorHandler
+            );
+        }
+    );
+
 }
 
 function createEntry() {
@@ -77,6 +102,7 @@ function createEntry() {
                 'INSERT INTO entries (date, calories, food) VALUES (?, ?, ?);', 
                 [date, calories, food], 
                 function(){
+                    refreshEntries();
                     jQT.goBack();
                 }, 
                 errorHandler
