@@ -83,6 +83,14 @@ function refreshEntries() {
                         newEntryRow.appendTo('#date ul');
                         newEntryRow.find('.label').text(row.food);
                         newEntryRow.find('.calories').text(row.calories);
+
+                        newEntryRow.data('entryId', row.id);
+                        newEntryRow.find('.delete').click(function(){
+                            var clickedEntry = $(this).parent();
+                            var clickedEntryId = clickedEntry.data('entryId');
+                            alert(clickedEntryId);
+                        });
+
                     }
                 }, 
                 errorHandler
