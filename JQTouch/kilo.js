@@ -88,7 +88,8 @@ function refreshEntries() {
                         newEntryRow.find('.delete').click(function(){
                             var clickedEntry = $(this).parent();
                             var clickedEntryId = clickedEntry.data('entryId');
-                            alert(clickedEntryId);
+                            deleteEntryById(clickedEntryId);                            
+                            clickedEntry.slideUp();//refreshEntries();
                         });
 
                     }
@@ -123,5 +124,14 @@ function createEntry() {
 function errorHandler(transaction, error) {
     alert('Oops. Error was '+error.message+' (Code '+error.code+')');
     return true; 
+}
+
+function deleteEntryById(id) { 
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql('DELETE FROM entries WHERE id=?;',
+            [id], null, errorHandler); 
+        }
+    ); 
 }
 
