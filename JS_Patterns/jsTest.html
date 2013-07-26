@@ -1,26 +1,22 @@
 <script>
 
-function Rectangle( width,height ){
-	this.width = width;
-	this.height = height;
-};
+var s1 = "hello";
+var s2 = "hello";
+console.log( s1 == s2 ); //true
+console.log( s1 === s2 ); //true
 
-Rectangle.prototype.getArea = function(){
-		return this.width*this.height;
-	};
+var s3 = new String( "hello" );
+var s4 = new String( "hello" );
+console.log( s3 == s4 ); //false
+console.log( s3 === s4 ); //false
+console.log( s3.toString() === s4.toString() ); //true
 
-var rect = new Rectangle( 5,10 );
-console.log( rect.getArea());//50
+var a1 = 0;
+var a2 = "0";
+var a3 = false;
+console.log( a1 == a2 ); //true
+console.log( a1 == a3 ); //true
+console.log( a1 === a2 ); //false
+console.log( a1 === a3 ); //false
 
-
-function Square( length ){
-	Rectangle.call(this,length,length);
-}
-Square.prototype = new Rectangle();
-Square.prototype.constructor = Square;
-
-var sqr = new Square( 10 );
-console.log( sqr.getArea());//100
-
-console.log( sqr instanceof Rectangle );//true
 </script>
