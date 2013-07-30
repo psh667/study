@@ -1,11 +1,12 @@
 var cluster = require('cluster');
 var http = require('http');
 var numCPUs = require('os').cpus().length;
-
+console.log( numCPUs );
 if (cluster.isMaster) {
   // 워커 생성
     for (var i = 0; i < numCPUs; i++) {
       cluster.fork();
+      console.log( "fork" );
     }
 
   cluster.on('death', function(worker) {

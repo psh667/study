@@ -9,6 +9,7 @@ if (cluster.isMaster) {
     
     worker.on('message', function(msg) {
       if (msg.cmd && msg.cmd == 'notifyRequest') {
+        console.log("message is received");
         numReqs++;
       }
     });
@@ -23,6 +24,7 @@ if (cluster.isMaster) {
     res.writeHead(200);
     res.end("hello world\n");
     // 마스터 프로세스로 메세지를 보낸다. 
+    //process.send({ cmd: 'notifyRequest' });
     process.send({ cmd: 'notifyRequest' });
   }).listen(8000);
 }

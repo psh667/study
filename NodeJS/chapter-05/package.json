@@ -1,0 +1,16 @@
+{
+  "author": "",
+  "name": "tweet",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "engines": {
+    "node": "~v0.4.10"
+  },
+  "dependencies": {
+      "node-schedule": "~0.1.4"
+    , "restler": "~0.2.3"
+  },
+  "devDependencies": {}
+}
